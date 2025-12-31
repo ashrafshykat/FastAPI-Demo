@@ -1,0 +1,37 @@
+[
+  {
+    "id": 1,
+    "name": "Laptop",
+    "price": 75000,
+    "category": "Electronics",
+    "in_stock": true
+  },
+  {
+    "id": 2,
+    "name": "Smartphone",
+    "price": 35000,
+    "category": "Electronics",
+    "in_stock": true
+  },
+  {
+    "id": 3,
+    "name": "Headphones",
+    "price": 2500,
+    "category": "Accessories",
+    "in_stock": false
+  },
+  {
+    "id": 4,
+    "name": "Office Chair",
+    "price": 12000,
+    "category": "Furniture",
+    "in_stock": true
+  },
+  {
+    "id": 5,
+    "name": "Notebook",
+    "price": 80,
+    "category": "Stationery",
+    "in_stock": true
+  }
+]
