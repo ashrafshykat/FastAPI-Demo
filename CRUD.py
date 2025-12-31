@@ -6,9 +6,11 @@ app = FastAPI()
 def load_data():
     with open('products.json', 'r') as f:
         data = json.load(f)
-    
     return data
 
+def save_data(data):
+    with open('products.json', 'w') as f:
+        json.dump(data, f, indent=4)
 
 @app.get('/')
 def hello():
@@ -50,3 +52,38 @@ def sort_products(
         raise HTTPException(status_code=400, detail="Invalid sort field")
 
     return sorted_data
+
+@app.post("/products/")
+def create_product(product: dict = Path(..., description='add product')):
+    data = load_data()
+
+    if any(p['id'] == product['id'] for p in data):
+        raise HTTPException(status_code=400, detail="Product ID already exists")
+
+    data.append(product)
+    save_data(data)
+    return {"message": "Product added", "product": product}
+
+@app.put("/products/{id}")
+def update_product(id: int, product: dict):
+    data = load_data()
+
+    for index, p in enumerate(data):
+        if p["id"] == id:
+            data[index].update(product)
+            save_data(data)
+            return {"message": "Product updated", "product": data[index]}
+    
+    raise HTTPException(status_code=404, detail="Product not found")
+
+@app.delete("/products/{id}")
+def delete_product(id: int):
+    data = load_data()
+
+    for index, p in enumerate(data):
+        if p["id"] == id:
+            deleted_product = data.pop(index)
+            save_data(data)
+            return {"message": "Product deleted", "product": deleted_product}
+
+    raise HTTPException(status_code=404, detail="Product not found")
