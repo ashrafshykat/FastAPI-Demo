@@ -1,12 +1,9 @@
 from fastapi import FastAPI, Path, HTTPException, Query
 import json
 
-app = FastAPI()
+from field_validator import load_data
 
-def load_data():
-    with open('products.json', 'r') as f:
-        data = json.load(f)
-    return data
+app = FastAPI()
 
 def save_data(data):
     with open('products.json', 'w') as f:
